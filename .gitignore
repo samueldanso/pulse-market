@@ -1,0 +1,12 @@
+resources/
+docs/
+.DS_Store
+
+# Foundry
+contracts/lib/
+contracts/out/
+contracts/cache/
+contracts/.env
+
+# Frontend
+frontend/.env.local
