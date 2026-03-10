@@ -41,7 +41,7 @@ export default function MarketDetailPage() {
   const searchParams = useSearchParams();
   const marketId     = BigInt(params.id as string);
   const sideParam    = searchParams.get("side");
-  const preSelected  = sideParam === "YES" || sideParam === "NO" ? sideParam : undefined;
+  const preSelected  = (sideParam === "UP" || sideParam === "DOWN") ? sideParam as "UP" | "DOWN" : undefined;
 
   const { address }                    = useAccount();
   const { market, isLoading, refetch } = useMarket(marketId);
@@ -110,7 +110,7 @@ export default function MarketDetailPage() {
                         ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
                         : "bg-pulse-down/10 text-pulse-down border-pulse-down/20"
                       }>
-                        {market.outcome === Outcome.Yes ? "YES Won" : "NO Won"}
+                        {market.outcome === Outcome.Yes ? "UP Won" : "DOWN Won"}
                       </Badge>
                     </>
                   )}
@@ -125,8 +125,8 @@ export default function MarketDetailPage() {
 
                 {/* YES/NO progress */}
                 <div className="mb-2 flex justify-between text-sm">
-                  <span className="font-bold text-emerald-600 dark:text-emerald-400">YES {yesPercent}%</span>
-                  <span className="font-bold text-pulse-down">{100 - yesPercent}% NO</span>
+                  <span className="font-bold text-emerald-600 dark:text-emerald-400">UP {yesPercent}%</span>
+                  <span className="font-bold text-pulse-down">{100 - yesPercent}% DOWN</span>
                 </div>
                 <div className="h-3 overflow-hidden rounded-full bg-white/5">
                   <div
@@ -141,8 +141,8 @@ export default function MarketDetailPage() {
           {/* Pool stats */}
           <div className="grid grid-cols-3 gap-3">
             {[
-              { label: "YES Pool", value: `${Number(formatEther(market.totalYesBets)).toFixed(4)} AVAX`, color: "text-emerald-500" },
-              { label: "NO Pool",  value: `${Number(formatEther(market.totalNoBets)).toFixed(4)} AVAX`,  color: "text-pulse-down" },
+              { label: "UP Pool",   value: `${Number(formatEther(market.totalYesBets)).toFixed(4)} AVAX`, color: "text-emerald-500" },
+              { label: "DOWN Pool", value: `${Number(formatEther(market.totalNoBets)).toFixed(4)} AVAX`,  color: "text-pulse-down" },
               { label: "Total",    value: `${Number(formatEther(totalPool)).toFixed(4)} AVAX`,           color: "text-pulse-black dark:text-white" },
             ].map((s) => (
               <div key={s.label} className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4">
@@ -192,19 +192,19 @@ export default function MarketDetailPage() {
                 <div className="flex gap-3">
                   <button
                     type="button"
-                    onClick={() => { resolveMarket(true); setTimeout(() => { refetch(); toast.success("Market resolved: YES wins"); }, 2000); }}
+                    onClick={() => { resolveMarket(true); setTimeout(() => { refetch(); toast.success("Market resolved: UP wins"); }, 2000); }}
                     disabled={isResolving}
                     className="flex-1 rounded-lg bg-emerald-500/15 py-2.5 text-sm font-semibold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/25 disabled:opacity-50"
                   >
-                    Resolve YES
+                    Resolve UP
                   </button>
                   <button
                     type="button"
-                    onClick={() => { resolveMarket(false); setTimeout(() => { refetch(); toast.success("Market resolved: NO wins"); }, 2000); }}
+                    onClick={() => { resolveMarket(false); setTimeout(() => { refetch(); toast.success("Market resolved: DOWN wins"); }, 2000); }}
                     disabled={isResolving}
                     className="flex-1 rounded-lg bg-pulse-down/15 py-2.5 text-sm font-semibold text-pulse-down hover:bg-pulse-down/25 disabled:opacity-50"
                   >
-                    Resolve NO
+                    Resolve DOWN
                   </button>
                 </div>
                 {isResolving && <p className="mt-2 text-center text-xs text-pulse-gray">Confirming...</p>}

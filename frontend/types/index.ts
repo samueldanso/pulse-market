@@ -47,7 +47,7 @@ export interface CreateMarketForm {
   durationSeconds: number;
 }
 
-export type BetSide = "YES" | "NO";
+export type BetSide = "UP" | "DOWN";
 
 export interface Position {
   id:        string;

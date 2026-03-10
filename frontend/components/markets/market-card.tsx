@@ -84,7 +84,7 @@ export function MarketCard({ market }: MarketCardProps) {
                   ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
                   : "bg-pulse-down/10 text-pulse-down border-pulse-down/20"
                 }>
-                  {market.outcome === Outcome.Yes ? "YES Won" : "NO Won"}
+                  {market.outcome === Outcome.Yes ? "UP Won" : "DOWN Won"}
                 </Badge>
               )}
             </div>
@@ -101,10 +101,10 @@ export function MarketCard({ market }: MarketCardProps) {
         <div className="flex-1 px-4 flex flex-col justify-center">
           <div className="flex justify-between text-xs mb-1.5">
             <span className="font-semibold text-emerald-600 dark:text-emerald-400">
-              YES {yesPercent}%
+              UP {yesPercent}%
             </span>
             <span className="font-semibold text-pulse-down">
-              {100 - yesPercent}% NO
+              {100 - yesPercent}% DOWN
             </span>
           </div>
           <div className="h-2 rounded-full bg-white/10 dark:bg-white/5 overflow-hidden">
@@ -129,7 +129,7 @@ export function MarketCard({ market }: MarketCardProps) {
           ) : isResolved ? (
             <div className="flex items-center justify-between">
               <span className={`text-xs font-semibold ${market.outcome === Outcome.Yes ? "text-emerald-500" : "text-pulse-down"}`}>
-                {market.outcome === Outcome.Yes ? "YES" : "NO"} Won
+                {market.outcome === Outcome.Yes ? "UP" : "DOWN"} Won
               </span>
               <span className="text-xs text-pulse-gray">Claim winnings →</span>
             </div>
@@ -145,14 +145,14 @@ export function MarketCard({ market }: MarketCardProps) {
                 onClick={(e) => e.preventDefault()}
                 className="flex-1 rounded-lg bg-emerald-500/15 py-2 text-sm font-semibold text-emerald-600 dark:text-emerald-400 transition-colors hover:bg-emerald-500/25"
               >
-                YES ↑
+                UP ↑
               </button>
               <button
                 type="button"
                 onClick={(e) => e.preventDefault()}
                 className="flex-1 rounded-lg bg-pulse-down/15 py-2 text-sm font-semibold text-pulse-down transition-colors hover:bg-pulse-down/25"
               >
-                NO ↓
+                DOWN ↓
               </button>
               <span className="font-mono text-xs text-pulse-gray">{countdown}</span>
             </div>

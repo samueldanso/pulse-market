@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useAccount } from "wagmi";
+import { usePrivy } from "@privy-io/react-auth";
 import { toast } from "sonner";
+import { formatEther } from "viem";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,9 +13,9 @@ import {
   useCancelExpiredMarket,
 } from "@/hooks/use-market-actions";
 import { useUserBet } from "@/hooks/use-pulse-market";
+import { useUserStore } from "@/stores/user-store";
 import { MarketStatus, Outcome } from "@/types";
-import type { Market, Bet } from "@/types";
-import { formatEther } from "viem";
+import type { Market } from "@/types";
 import { MIN_BET_ETH } from "@/constants";
 
 const BET_AMOUNTS = ["0.001", "0.01", "0.1", "0.5"];
@@ -22,14 +23,16 @@ const BET_AMOUNTS = ["0.001", "0.01", "0.1", "0.5"];
 interface BetInterfaceProps {
   market: Market;
   onSuccess: () => void;
-  preSelectedSide?: "YES" | "NO";
+  preSelectedSide?: "UP" | "DOWN";
 }
 
 export function BetInterface({ market, onSuccess, preSelectedSide }: BetInterfaceProps) {
-  const { address } = useAccount();
-  const { bet, refetch: refetchBet } = useUserBet(market.id, address);
+  const { authenticated, login } = usePrivy();
+  const { address } = useUserStore();
+  const { bet, refetch: refetchBet } = useUserBet(market.id, address as `0x${string}` | undefined);
   const [amount, setAmount] = useState("0.01");
-  const [selectedSide, setSelectedSide] = useState<"YES" | "NO" | null>(preSelectedSide ?? null);
+  const [selectedSide, setSelectedSide] = useState<"UP" | "DOWN" | null>(preSelectedSide ?? null);
+  const { addPosition } = useUserStore();
 
   const { placeBet, isPending: isBetting, error: betError } = usePlaceBet(market.id);
   const { claimWinnings, isPending: isClaiming } = useClaimWinnings(market.id);
@@ -48,20 +51,35 @@ export function BetInterface({ market, onSuccess, preSelectedSide }: BetInterfac
   const canBet    = isActive && !isExpired && !hasBet && !!address;
 
   function handlePlaceBet() {
-    if (!selectedSide) { toast.error("Select YES or NO first"); return; }
-    placeBet(selectedSide === "YES", amount);
-    setTimeout(() => { refetchBet(); onSuccess(); }, 2000);
+    if (!selectedSide) { toast.error("Select UP or DOWN first"); return; }
+    placeBet(selectedSide === "UP", amount);
+    setTimeout(() => {
+      addPosition({
+        id: `${market.id}-${address}-${Date.now()}`,
+        marketId: market.id.toString(),
+        side: selectedSide,
+        amount: Number(amount),
+        timestamp: Date.now(),
+        settled: false,
+      });
+      refetchBet();
+      onSuccess();
+    }, 2000);
   }
 
   if (isResolved) {
+    const userSideWon = hasBet && (
+      (market.outcome === Outcome.Yes && bet!.isYes) ||
+      (market.outcome === Outcome.No && !bet!.isYes)
+    );
     return (
       <div className="space-y-4 rounded-xl border border-white/[0.08] bg-white/[0.03] p-6">
         <h3 className="font-semibold text-pulse-black dark:text-white">Market Settled</h3>
         <div className={`rounded-lg p-4 text-center ${market.outcome === Outcome.Yes ? "bg-emerald-500/10" : "bg-pulse-down/10"}`}>
           <p className="text-2xl font-bold mb-1">
             {market.outcome === Outcome.Yes
-              ? <span className="text-emerald-500">YES Won</span>
-              : <span className="text-pulse-down">NO Won</span>
+              ? <span className="text-emerald-500">UP Won</span>
+              : <span className="text-pulse-down">DOWN Won</span>
             }
           </p>
         </div>
@@ -77,10 +95,10 @@ export function BetInterface({ market, onSuccess, preSelectedSide }: BetInterfac
           </Button>
         )}
 
-        {hasBet && !isWinner && (
+        {hasBet && !userSideWon && (
           <p className="text-center text-sm text-pulse-gray">
             You bet <span className={bet!.isYes ? "text-emerald-500" : "text-pulse-down"}>
-              {bet!.isYes ? "YES" : "NO"}
+              {bet!.isYes ? "UP" : "DOWN"}
             </span> · {Number(formatEther(bet!.amount)).toFixed(4)} AVAX
           </p>
         )}
@@ -134,12 +152,23 @@ export function BetInterface({ market, onSuccess, preSelectedSide }: BetInterfac
     <div className="space-y-4 rounded-xl border border-white/[0.08] bg-white/[0.03] p-6">
       <h3 className="font-semibold text-pulse-black dark:text-white">Place Your Bet</h3>
 
-      {hasBet ? (
+      {!authenticated ? (
+        <div className="space-y-3 text-center">
+          <p className="text-sm text-pulse-gray">Connect your wallet to place a bet</p>
+          <Button
+            size="lg"
+            onClick={() => login()}
+            className="w-full bg-pulse-red-500 hover:bg-pulse-red-600 font-bold text-white"
+          >
+            Connect Wallet
+          </Button>
+        </div>
+      ) : hasBet ? (
         <div className="rounded-lg border border-white/10 p-4 text-center">
           <p className="text-sm text-pulse-gray">
             You bet{" "}
             <span className={bet!.isYes ? "font-bold text-emerald-500" : "font-bold text-pulse-down"}>
-              {bet!.isYes ? "YES" : "NO"}
+              {bet!.isYes ? "UP" : "DOWN"}
             </span>{" "}
             with{" "}
             <span className="font-semibold text-pulse-black dark:text-white">
@@ -149,29 +178,29 @@ export function BetInterface({ market, onSuccess, preSelectedSide }: BetInterfac
         </div>
       ) : (
         <>
-          {/* YES / NO selector */}
+          {/* UP / DOWN selector */}
           <div className="grid grid-cols-2 gap-3">
             <button
               type="button"
-              onClick={() => setSelectedSide("YES")}
+              onClick={() => setSelectedSide("UP")}
               className={`rounded-lg py-2.5 text-sm font-semibold transition-all ${
-                selectedSide === "YES"
+                selectedSide === "UP"
                   ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/25"
                   : "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/25"
               }`}
             >
-              YES ↑
+              UP ↑
             </button>
             <button
               type="button"
-              onClick={() => setSelectedSide("NO")}
+              onClick={() => setSelectedSide("DOWN")}
               className={`rounded-lg py-2.5 text-sm font-semibold transition-all ${
-                selectedSide === "NO"
+                selectedSide === "DOWN"
                   ? "bg-pulse-down text-white shadow-lg shadow-pulse-down/25"
                   : "bg-pulse-down/15 text-pulse-down hover:bg-pulse-down/25"
               }`}
             >
-              NO ↓
+              DOWN ↓
             </button>
           </div>
 
@@ -210,29 +239,21 @@ export function BetInterface({ market, onSuccess, preSelectedSide }: BetInterfac
             disabled={!canBet || isBetting || !selectedSide}
             onClick={handlePlaceBet}
             className={`w-full font-bold text-white ${
-              selectedSide === "NO"
+              selectedSide === "DOWN"
                 ? "bg-pulse-down hover:bg-pulse-down/90"
                 : "bg-emerald-500 hover:bg-emerald-600"
             }`}
           >
             {isBetting
               ? "Confirming..."
-              : !address
-                ? "Connect Wallet"
-                : selectedSide
-                  ? `Bet ${selectedSide} · ${amount} AVAX`
-                  : "Select YES or NO"}
+              : selectedSide
+                ? `Bet ${selectedSide} · ${amount} AVAX`
+                : "Select UP or DOWN"}
           </Button>
 
           {betError && (
             <p className="text-xs text-pulse-down text-center">
               {(betError as {shortMessage?: string}).shortMessage ?? betError.message}
-            </p>
-          )}
-
-          {!address && (
-            <p className="text-center text-xs text-pulse-gray">
-              Connect your wallet to place a bet
             </p>
           )}
         </>

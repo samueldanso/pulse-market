@@ -1,13 +1,12 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import type { Position } from "@/types";
 
 interface UserStore {
   address: string;
-  balance: number;
   positions: Position[];
 
   setAddress: (address: string) => void;
-  setBalance: (balance: number) => void;
   addPosition: (position: Position) => void;
   updatePosition: (id: string, updates: Partial<Position>) => void;
   reset: () => void;
@@ -15,25 +14,31 @@ interface UserStore {
 
 const INITIAL_STATE = {
   address: "",
-  balance: 0,
   positions: [] as Position[],
 };
 
-export const useUserStore = create<UserStore>((set) => ({
-  ...INITIAL_STATE,
+export const useUserStore = create<UserStore>()(
+  persist(
+    (set) => ({
+      ...INITIAL_STATE,
 
-  setAddress: (address) => set({ address }),
-  setBalance: (balance) => set({ balance }),
+      setAddress: (address) => set({ address }),
 
-  addPosition: (position) =>
-    set((state) => ({ positions: [...state.positions, position] })),
+      addPosition: (position) =>
+        set((state) => ({ positions: [...state.positions, position] })),
 
-  updatePosition: (id, updates) =>
-    set((state) => ({
-      positions: state.positions.map((p) =>
-        p.id === id ? { ...p, ...updates } : p,
-      ),
-    })),
+      updatePosition: (id, updates) =>
+        set((state) => ({
+          positions: state.positions.map((p) =>
+            p.id === id ? { ...p, ...updates } : p,
+          ),
+        })),
 
-  reset: () => set(INITIAL_STATE),
-}));
+      reset: () => set({ address: "", positions: [] }),
+    }),
+    {
+      name: "pulse-market-user",
+      partialize: (state) => ({ positions: state.positions }),
+    },
+  ),
+);

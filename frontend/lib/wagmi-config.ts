@@ -1,5 +1,6 @@
 import { defineChain } from "viem";
-import { createConfig, http } from "@privy-io/wagmi";
+import { http } from "wagmi";
+import { createConfig } from "@privy-io/wagmi";
 
 export const avalancheFuji = defineChain({
   id: 43113,
