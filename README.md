@@ -6,7 +6,7 @@
 [![Fuji](https://img.shields.io/badge/Network-Fuji%20Testnet-orange)](https://testnet.snowtrace.io)
 [![License](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
 
-[🎥 **Video Demo**](#) | [🌐 **Live Demo**](https://pulse-market-avax.vercel.app) | [📄 **Full Docs**](./docs/technical-docs.md)
+[🎥 **Video Demo**](https://youtu.be/KXQw6ASf7X4) | [🌐 **Live Demo**](https://pulse-market-avax.vercel.app) | [📄 **Full Docs**](./docs/technical-docs.md)
 
 ---
 

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { formatEther } from "viem";
 import { Badge } from "@/components/ui/badge";
@@ -39,6 +40,7 @@ function useCountdown(endTime: bigint): string {
 }
 
 export function MarketCard({ market }: MarketCardProps) {
+  const router = useRouter();
   const countdown = useCountdown(market.endTime);
   const totalPool = market.totalYesBets + market.totalNoBets;
   const yesPercent = totalPool > 0n
@@ -109,7 +111,7 @@ export function MarketCard({ market }: MarketCardProps) {
           </div>
           <div className="h-2 rounded-full bg-white/10 dark:bg-white/5 overflow-hidden">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-emerald-600 to-emerald-400 transition-all duration-500"
+              className="h-full rounded-full bg-linear-to-r from-emerald-600 to-emerald-400 transition-all duration-500"
               style={{ width: `${yesPercent}%` }}
             />
           </div>
@@ -142,14 +144,20 @@ export function MarketCard({ market }: MarketCardProps) {
             <div className="flex items-center gap-3">
               <button
                 type="button"
-                onClick={(e) => e.preventDefault()}
+                onClick={(e) => {
+                  e.preventDefault();
+                  router.push(`/markets/${market.id}?side=UP`);
+                }}
                 className="flex-1 rounded-lg bg-emerald-500/15 py-2 text-sm font-semibold text-emerald-600 dark:text-emerald-400 transition-colors hover:bg-emerald-500/25"
               >
                 UP ↑
               </button>
               <button
                 type="button"
-                onClick={(e) => e.preventDefault()}
+                onClick={(e) => {
+                  e.preventDefault();
+                  router.push(`/markets/${market.id}?side=DOWN`);
+                }}
                 className="flex-1 rounded-lg bg-pulse-down/15 py-2 text-sm font-semibold text-pulse-down transition-colors hover:bg-pulse-down/25"
               >
                 DOWN ↓
