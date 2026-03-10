@@ -28,11 +28,11 @@ export function HowitWorksSection() {
         <div className="grid grid-cols-1 items-center gap-16 md:grid-cols-2">
           <div>
             <h2 className="mb-5 text-3xl font-medium text-pulse-black md:text-4xl">
-              YES or NO. You Choose.
+              UP or DOWN. You Choose.
             </h2>
             <p className="mb-10 max-w-sm text-base font-medium leading-relaxed text-pulse-gray">
-              Pick a market (e.g. Will Bitcoin social attention spike 30% in 2h?). Bet YES if it
-              will, NO if it won&apos;t. Winners split the pot
+              Pick a market (e.g. Will AVAX hit $100 before April?). Bet UP if it
+              will, DOWN if it won&apos;t. Winners split the pot
               proportionally. Markets resolve when the timer hits zero.
             </p>
             <Button asChild className="h-12 flex items-center gap-2.5 rounded-xl bg-pulse-black px-7 py-3.5 text-xs font-semibold text-white transition-opacity hover:bg-black/80">

@@ -42,7 +42,7 @@ export default function MarketsPage() {
             Prediction Markets
           </h1>
           <p className="mt-2 text-pulse-gray">
-            Bet YES or NO on on-chain markets. Winners split the pool.
+            Bet UP or DOWN on on-chain markets. Winners split the pool.
           </p>
         </div>
         <Button

@@ -24,21 +24,21 @@ export function Navbar() {
         >
           <path
             d="M2 8C2 8 4 4 6 4C8 4 8 8 10 8C12 8 12 2 14 2C16 2 16 10 18 10C20 10 22 6 22 6"
-            stroke="currentColor"
+            stroke="#E84142"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
           <path
             d="M2 12C2 12 4 8 6 8C8 8 8 12 10 12C12 12 12 6 14 6C16 6 16 14 18 14C20 14 22 10 22 10"
-            stroke="currentColor"
+            stroke="#E84142"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
           <path
             d="M2 16C2 16 4 12 6 12C8 12 8 16 10 16C12 16 12 10 14 10C16 10 16 18 18 18C20 18 22 14 22 14"
-            stroke="currentColor"
+            stroke="#E84142"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"

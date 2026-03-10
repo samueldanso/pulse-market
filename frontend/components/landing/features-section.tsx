@@ -42,7 +42,7 @@ export function FeaturesSection() {
               Direct On-Chain Trading
             </h3>
             <p className="max-w-xs text-sm font-medium leading-relaxed text-gray-400">
-              Avalanche smart contracts on Fuji testnet. Place YES or NO bets
+              Avalanche smart contracts on Fuji testnet. Trade UP or DOWN
               with AVAX. Funds escrowed trustlessly — no intermediaries,
               no custodians.
             </p>
@@ -83,7 +83,7 @@ export function FeaturesSection() {
             </h3>
             <p className="text-xs font-medium leading-relaxed text-pulse-gray">
               Trade narrative momentum, sentiment shifts, and viral potential.
-              Binary YES/NO markets with timed expiry and proportional payouts.
+              Binary UP/DOWN markets with timed expiry and proportional payouts.
             </p>
           </div>
         </div>
