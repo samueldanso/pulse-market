@@ -1,53 +1,56 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { MarketCard } from "@/components/markets/market-card";
-import { CreateMarketModal } from "@/components/markets/create-market-modal";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
-import { useMarkets, useMarketCount } from "@/hooks/use-pulse-market";
-import { MarketStatus } from "@/types";
+import { useState } from "react"
+import { AnimatePresence, motion } from "framer-motion"
+import { MarketCard } from "@/components/markets/market-card"
+import { CreateMarketModal } from "@/components/markets/create-market-modal"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Button } from "@/components/ui/button"
+import { useMarkets, useMarketCount } from "@/hooks/use-pulse-market"
+import { MarketStatus } from "@/types"
 
-const PAGE_SIZE = 12n;
+const PAGE_SIZE = 12n
 
-type FilterTab = "all" | "active" | "resolved";
+type FilterTab = "all" | "active" | "resolved"
 
 export default function MarketsPage() {
-  const [filter, setFilter]         = useState<FilterTab>("all");
-  const [page, setPage]             = useState(0n);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [filter, setFilter] = useState<FilterTab>("all")
+  const [page, setPage] = useState(0n)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const { count }              = useMarketCount();
-  const { markets, isLoading, refetch } = useMarkets(page * PAGE_SIZE, PAGE_SIZE);
+  const { count } = useMarketCount()
+  const { markets, isLoading, refetch } = useMarkets(
+    page * PAGE_SIZE,
+    PAGE_SIZE
+  )
 
   const filtered = markets.filter((m) => {
-    if (filter === "active")   return m.status === MarketStatus.Active;
-    if (filter === "resolved") return m.status === MarketStatus.Resolved;
-    return true;
-  });
+    if (filter === "active") return m.status === MarketStatus.Active
+    if (filter === "resolved") return m.status === MarketStatus.Resolved
+    return true
+  })
 
   const tabs: { key: FilterTab; label: string }[] = [
-    { key: "all",      label: "All Markets" },
-    { key: "active",   label: "Active"      },
-    { key: "resolved", label: "Resolved"    },
-  ];
+    { key: "all", label: "All Markets" },
+    { key: "active", label: "Active" },
+    { key: "resolved", label: "Resolved" },
+  ]
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-8">
       {/* Header */}
-      <div className="mb-8 flex items-end justify-between">
+      <div className="mb-8 flex items-end justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-pulse-black dark:text-white">
-            Prediction Markets
+            Attention Markets
           </h1>
           <p className="mt-2 text-pulse-gray">
-            Bet UP or DOWN on on-chain markets. Winners split the pool.
+            Bet on attention markets. Winners split the pool.
           </p>
         </div>
         <Button
           onClick={() => setIsModalOpen(true)}
-          className="bg-pulse-red-500 hover:bg-pulse-red-600 font-semibold text-white"
+          className="bg-pulse-red-500 font-semibold text-white hover:bg-pulse-red-600"
         >
           + Create Market
         </Button>
@@ -57,9 +60,12 @@ export default function MarketsPage() {
       <div className="mb-6 flex items-center gap-2">
         {tabs.map((tab) => (
           <button
-            key={tab.key}
+            key={`markets-tab-${tab.key}`}
             type="button"
-            onClick={() => { setFilter(tab.key); setPage(0n); }}
+            onClick={() => {
+              setFilter(tab.key)
+              setPage(0n)
+            }}
             className={`rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200 ${
               filter === tab.key
                 ? "bg-pulse-red-500 text-white"
@@ -77,18 +83,22 @@ export default function MarketsPage() {
       {/* Grid */}
       {isLoading ? (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <Skeleton key={i} className="h-[280px] rounded-xl" />
+          {["a", "b", "c", "d", "e", "f"].map((id) => (
+            <Skeleton key={`markets-skeleton-${id}`} className="h-[280px] rounded-xl" />
           ))}
         </div>
       ) : filtered.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-24 text-center">
           <div className="mb-4 text-5xl">📊</div>
-          <p className="text-lg font-medium text-pulse-black dark:text-white">No markets yet</p>
-          <p className="mt-1 text-sm text-pulse-gray">Be the first to create a prediction market!</p>
+          <p className="text-lg font-medium text-pulse-black dark:text-white">
+            No markets yet
+          </p>
+          <p className="mt-1 text-sm text-pulse-gray">
+            Be the first to create a attention market!
+          </p>
           <Button
             onClick={() => setIsModalOpen(true)}
-            className="mt-6 bg-pulse-red-500 hover:bg-pulse-red-600 text-white"
+            className="mt-6 bg-pulse-red-500 text-white hover:bg-pulse-red-600"
           >
             Create First Market
           </Button>
@@ -137,8 +147,11 @@ export default function MarketsPage() {
 
       <CreateMarketModal
         isOpen={isModalOpen}
-        onClose={() => { setIsModalOpen(false); refetch(); }}
+        onClose={() => {
+          setIsModalOpen(false)
+          refetch()
+        }}
       />
     </main>
-  );
+  )
 }

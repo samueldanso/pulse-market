@@ -25,8 +25,8 @@ function getOpacity(row: number, col: number): number {
 export function GridBackground() {
   return (
     <div className="pointer-events-none absolute top-0 left-0 z-0 size-full select-none overflow-hidden">
-      <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-[#FAFAFA] to-90%" />
-      <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#FAFAFA] via-transparent to-[#FAFAFA] opacity-60" />
+      <div className="absolute inset-0 z-10 bg-linear-to-b from-transparent via-transparent to-[#FAFAFA] to-90% dark:to-black" />
+      <div className="absolute inset-0 z-10 bg-linear-to-r from-[#FAFAFA] via-transparent to-[#FAFAFA] opacity-60 dark:from-black dark:to-black" />
       <div
         className="grid size-full gap-px"
         style={{
@@ -40,11 +40,11 @@ export function GridBackground() {
           const opacity = getOpacity(row, col);
 
           if (opacity <= 0.02)
-            return <div key={i} className="bg-transparent" />;
+            return <div key={`cell-empty-${row}-${col}`} className="bg-transparent" />;
 
           return (
             <div
-              key={i}
+              key={`cell-${row}-${col}`}
               className="backdrop-blur-[2px]"
               style={{
                 backgroundColor: `rgba(232, 65, 66, ${opacity})`,

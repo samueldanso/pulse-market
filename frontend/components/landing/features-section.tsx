@@ -11,6 +11,7 @@ function DotPattern({ className }: { className?: string }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      aria-hidden="true"
     >
       <circle cx="2" cy="2" r="1" fill="#D4D4D8" />
       <circle cx="2" cy="12" r="1" fill="#D4D4D8" />
@@ -26,7 +27,7 @@ export function FeaturesSection() {
       className="relative mx-auto mb-40 max-w-[1100px] px-6"
     >
       <div className="mb-20 text-center">
-        <h2 className="mb-3 text-4xl font-medium tracking-tight md:text-5xl">
+        <h2 className="mb-3 text-4xl font-medium tracking-tight text-pulse-black dark:text-white md:text-5xl">
           Built for Speed & Clarity
         </h2>
         <p className="mx-auto max-w-xl text-pulse-gray">
@@ -52,7 +53,7 @@ export function FeaturesSection() {
           </div>
         </div>
 
-        <div className="group relative flex h-[300px] flex-col justify-between overflow-hidden rounded-3xl border border-gray-200 bg-white p-8 shadow-xl shadow-gray-200/50 transition-all duration-500 hover:border-pulse-red-500/20 hover:shadow-2xl hover:shadow-pulse-red-500/10 md:h-full">
+        <div className="group relative flex h-[300px] flex-col justify-between overflow-hidden rounded-3xl border border-gray-200 bg-white p-8 shadow-xl shadow-gray-200/50 transition-all duration-500 hover:border-pulse-red-500/20 hover:shadow-2xl hover:shadow-pulse-red-500/10 dark:border-white/10 dark:bg-zinc-950 dark:shadow-none md:h-full">
           <div className="absolute top-6 right-6 opacity-40">
             <DotPattern className="size-4" />
           </div>
@@ -70,7 +71,7 @@ export function FeaturesSection() {
           </div>
         </div>
 
-        <div className="group relative flex h-[300px] flex-col justify-between overflow-hidden rounded-3xl border border-gray-200 bg-white p-8 shadow-xl shadow-gray-200/50 transition-all duration-500 hover:border-pulse-red-500/20 hover:shadow-2xl hover:shadow-pulse-red-500/10 md:h-full">
+        <div className="group relative flex h-[300px] flex-col justify-between overflow-hidden rounded-3xl border border-gray-200 bg-white p-8 shadow-xl shadow-gray-200/50 transition-all duration-500 hover:border-pulse-red-500/20 hover:shadow-2xl hover:shadow-pulse-red-500/10 dark:border-white/10 dark:bg-zinc-950 dark:shadow-none md:h-full">
           <div className="absolute top-6 left-6 opacity-40">
             <DotPattern className="size-4" />
           </div>
@@ -89,8 +90,8 @@ export function FeaturesSection() {
         </div>
       </div>
 
-      <div className="absolute top-0 bottom-0 -left-16 hidden border-l border-dashed border-gray-200 xl:block" />
-      <div className="absolute top-0 bottom-0 -right-16 hidden border-l border-dashed border-gray-200 xl:block" />
+      <div className="absolute top-0 bottom-0 -left-16 hidden border-l border-dashed border-gray-200 dark:border-white/10 xl:block" />
+      <div className="absolute top-0 bottom-0 -right-16 hidden border-l border-dashed border-gray-200 dark:border-white/10 xl:block" />
     </section>
   );
 }

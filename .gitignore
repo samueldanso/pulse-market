@@ -1,5 +1,4 @@
 resources/
-docs/
 .DS_Store
 
 # Foundry
@@ -10,3 +9,6 @@ contracts/.env
 
 # Frontend
 frontend/.env.local
+
+Internal files:
+CLAUDE.md

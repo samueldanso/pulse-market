@@ -1,6 +1,7 @@
 "use client";
 
-import { ConnectButton } from "@/components/wallet/connect-button";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const NAV_ITEMS = [
   { label: "Markets", href: "/markets" },
@@ -8,7 +9,6 @@ const NAV_ITEMS = [
   { label: "How It Works", href: "#how-it-works" },
   { label: "Docs", href: "#docs" },
   { label: "FAQ", href: "#FAQ" },
-  { label: "X (Twitter)", href: "https://x.com/samueldans0" },
 ];
 
 export function Navbar() {
@@ -21,6 +21,7 @@ export function Navbar() {
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
         >
           <path
             d="M2 8C2 8 4 4 6 4C8 4 8 8 10 8C12 8 12 2 14 2C16 2 16 10 18 10C20 10 22 6 22 6"
@@ -44,24 +45,29 @@ export function Navbar() {
             strokeLinejoin="round"
           />
         </svg>
-        <span className="text-2xl font-bold tracking-tight text-pulse-black">
-          Pulse
+        <span className="text-2xl font-bold tracking-tight text-pulse-black dark:text-white">
+          PulseMarket
         </span>
       </div>
 
-      <div className="hidden items-center gap-1 rounded-lg border border-white/40 bg-white/50 px-2 py-1.5 shadow-sm backdrop-blur-sm md:flex">
+      <div className="hidden items-center gap-1 rounded-lg border border-white/40 bg-white/50 px-2 py-1.5 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/5 md:flex">
         {NAV_ITEMS.map((item) => (
           <a
             key={item.label}
             href={item.href}
-            className="px-4 py-1.5 text-xs font-medium text-pulse-gray transition-colors hover:text-pulse-black"
+            className="px-4 py-1.5 text-xs font-medium text-pulse-gray transition-colors hover:text-pulse-black dark:text-white/70 dark:hover:text-white"
           >
             {item.label}
           </a>
         ))}
       </div>
 
-      <ConnectButton />
+      <Button
+        asChild
+        className="rounded-lg bg-pulse-black px-5 py-2.5 text-xs font-semibold text-white shadow-lg shadow-black/5 transition-opacity hover:bg-black/80 dark:bg-pulse-red-500 dark:text-white dark:shadow-none dark:hover:bg-pulse-red-400"
+      >
+        <Link href="/markets">Launch App</Link>
+      </Button>
     </nav>
   );
 }

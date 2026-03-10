@@ -25,7 +25,7 @@ interface CreateMarketModalProps {
 
 const DEFAULT_FORM: CreateMarketForm = {
   question:        "",
-  durationSeconds: 86_400,
+  durationSeconds: 300,
 };
 
 export function CreateMarketModal({ isOpen, onClose }: CreateMarketModalProps) {
@@ -80,7 +80,7 @@ export function CreateMarketModal({ isOpen, onClose }: CreateMarketModalProps) {
             Create Market
           </DialogTitle>
           <p className="text-xs text-pulse-gray">
-            Requires {CREATION_BOND_ETH} AVAX creation bond (counts as your YES bet)
+            Requires {CREATION_BOND_ETH} AVAX creation bond (counts as your UP bet)
           </p>
         </DialogHeader>
 
@@ -103,7 +103,7 @@ export function CreateMarketModal({ isOpen, onClose }: CreateMarketModalProps) {
                   value={form.question}
                   onChange={(e) => setForm((f) => ({ ...f, question: e.target.value }))}
                   className="w-full resize-none rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-sm text-pulse-black dark:text-white placeholder:text-pulse-gray outline-none focus:border-pulse-red-500/50 h-24"
-                  placeholder="Will AVAX reach $100 this month?"
+                  placeholder="Will Elon Musk tweet about crypto this week?"
                   maxLength={280}
                   required
                 />
@@ -137,7 +137,7 @@ export function CreateMarketModal({ isOpen, onClose }: CreateMarketModalProps) {
                 <strong className="text-pulse-black dark:text-white ml-1">
                   {CREATION_BOND_ETH} AVAX
                 </strong>
-                <span className="text-pulse-gray ml-1">— your initial YES position.</span>
+                <span className="text-pulse-gray ml-1">— your initial UP position.</span>
               </div>
 
               {error && (

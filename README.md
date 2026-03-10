@@ -1,4 +1,4 @@
-# PulseMarkets — Instant Attention Trading on Avalanche
+# PulseMarket — Instant Attention Trading on Avalanche
 
 > Real-time prediction market for trading social attention and narratives — built on Avalanche with fast, low-cost on-chain settlement.
 
@@ -6,13 +6,13 @@
 [![Fuji](https://img.shields.io/badge/Network-Fuji%20Testnet-orange)](https://testnet.snowtrace.io)
 [![License](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
 
-[🎥 **Video Demo**](#) | [🌐 **Live Demo**](#) | [📄 **Full Docs**](./docs/technical-docs.md)
+[🎥 **Video Demo**](#) | [🌐 **Live Demo**](https://pulse-market-avax.vercel.app) | [📄 **Full Docs**](./docs/technical-docs.md)
 
 ---
 
 ## Overview
 
-PulseMarkets turns social attention into a tradable asset. Users trade UP or DOWN on narrative markets that resolve on-chain. All funds escrowed in Avalanche smart contracts — trustless, transparent, verifiable.
+PulseMarket turns social attention into a tradable asset. Users trade UP or DOWN on narrative markets that resolve on-chain. All funds escrowed in Avalanche smart contracts — trustless, transparent, verifiable.
 
 **One line:** Trade narrative momentum before the market catches up.
 

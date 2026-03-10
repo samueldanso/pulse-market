@@ -1,6 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useUserStore } from "@/stores/user-store";
 import { Navbar } from "@/components/landing/navbar";
 import { PartnersSection } from "@/components/landing/partners-section";
 
@@ -27,8 +30,17 @@ const HowitWorksSection = dynamic(
 );
 
 export default function Page() {
+  const router = useRouter();
+  const address = useUserStore((state) => state.address);
+
+  useEffect(() => {
+    if (address) {
+      router.replace("/markets");
+    }
+  }, [address, router]);
+
   return (
-    <div className="min-h-screen bg-pulse-bg font-sans text-pulse-black selection:bg-pulse-red-300/20">
+    <div className="min-h-screen bg-pulse-bg font-sans text-pulse-black selection:bg-pulse-red-300/20 dark:bg-black dark:text-white">
       <Navbar />
       <main className="relative overflow-hidden">
         <HeroSection />
