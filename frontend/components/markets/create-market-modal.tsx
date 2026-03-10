@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { parseEventLogs } from "viem";
-import { useAccount } from "wagmi";
 import { toast } from "sonner";
 import {
   Dialog,
@@ -12,10 +11,10 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useCreateMarket } from "@/hooks/use-market-actions";
 import { PULSE_MARKET_ABI } from "@/lib/contracts/abis";
 import { CREATION_BOND_ETH, DURATION_OPTIONS } from "@/constants";
+import { useUserStore } from "@/stores/user-store";
 import type { CreateMarketForm } from "@/types";
 
 interface CreateMarketModalProps {
@@ -29,7 +28,7 @@ const DEFAULT_FORM: CreateMarketForm = {
 };
 
 export function CreateMarketModal({ isOpen, onClose }: CreateMarketModalProps) {
-  const { address } = useAccount();
+  const address = useUserStore((state) => state.address);
   const [form, setForm] = useState<CreateMarketForm>(DEFAULT_FORM);
   const [createdId, setCreatedId] = useState<bigint | null>(null);
 

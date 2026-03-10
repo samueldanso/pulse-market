@@ -224,5 +224,6 @@ MIT
 
 **Team:** Samuel Danso — Engineering & Product Lead
 **Contact:** me.samueldanso@gmail.com
+
 **Team:** John Okyere — Backend & Smart Contract Engineer
-**Contact:** me.samueldanso@gmail.com
+**Contact:** johnokyere282@icloud.com
