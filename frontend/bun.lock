@@ -8,6 +8,7 @@
         "@hugeicons/core-free-icons": "^4.0.0",
         "@hugeicons/react": "^1.1.5",
         "@privy-io/react-auth": "^3.16.0",
+        "@privy-io/wagmi": "^4.0.2",
         "@react-three/drei": "^10.7.7",
         "@react-three/fiber": "^9.5.0",
         "@tanstack/react-query": "^5.90.21",
@@ -376,6 +377,8 @@
     "@privy-io/routes": ["@privy-io/routes@0.0.7", "", { "dependencies": { "@privy-io/api-types": "0.5.0" } }, "sha512-87tiO1u3icR/vB/fv0SS9YkfeiDDTx/2GS2EUlC3BN7cU3O/ngAGutuX6977z5x1ps59l85AjekZCPOHMWin6w=="],
 
     "@privy-io/urls": ["@privy-io/urls@0.0.3", "", {}, "sha512-cococ82ycPJc+wSCHUG0TrVJXF2PIkmDH8TLV+oGqBr14Q7ziRI63aCFIp6FpSRhdDDo9jmB0VR9NjCak4ptMA=="],
+
+    "@privy-io/wagmi": ["@privy-io/wagmi@4.0.2", "", { "peerDependencies": { "@privy-io/react-auth": "^3", "react": ">=18", "viem": "^2.46.1", "wagmi": ">=2" } }, "sha512-syMl55uc36il5MR4L0P6uQIyUIVf0BB5CDu2qwMG7fjN7weCe/VABUCwcGkgzyVPJqEFMWPD6BFrYsXfS4yVfA=="],
 
     "@radix-ui/number": ["@radix-ui/number@1.1.1", "", {}, "sha512-MkKCwxlXTgz6CFoJx3pCwn07GKp36+aZyu/u2Ln2VrA5DcdyCZkASEDBTd8x5whTQQL5CiYf4prXKLcgQdv29g=="],
 
